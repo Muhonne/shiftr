@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Provider } from "react-redux";
 
-export default function() {
-  return (
-    <View>
-      <Text>Alive</Text>
-    </View>
-  );
-}
+import Navigator from "./Navigator";
+import store from "./redux/store";
+
+export default () => (
+  <Provider store={store}>
+    <Navigator />
+  </Provider>
+);
