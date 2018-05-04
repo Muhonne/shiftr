@@ -29,7 +29,6 @@ const initialState = {
 // Immer handles everything, we just need to "mutate the state" to get a new immutable state
 /* eslint-disable no-param-reassign,no-fallthrough */
 export default (state: Store = initialState, action: Action): Store => {
-  console.log("navigate to ", action);
   switch (action.type) {
     case actionTypes.TO_MY_SHIFTS:
       return { ...state, route: constants.routes.MY_SHIFTS };
