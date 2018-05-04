@@ -1,9 +1,39 @@
-import { TabNavigator } from "react-navigation";
+// @flow
 
-import MyShifts from "./components/MyShifts";
-import AvailableShifts from "./components/Availableshifts";
+import React from "react";
+import { connect } from "react-redux";
 
-export default TabNavigator({
-  Home: { screen: MyShifts },
-  Settings: { screen: AvailableShifts }
-});
+import Screen from "./components/Screen";
+import ShiftList from "./components/ShiftList";
+import type { routes } from "./types";
+import constants from "./constants";
+
+
+const Navigator = (props: { route: routes }) => {
+  switch (props.route) {
+    case constants.routes.MY_SHIFTS:
+      return (
+        <Screen>
+          <ShiftList title={"My Shifts"} />
+        </Screen>
+      );
+    case constants.routes.AVAILABLE_SHIFTS:
+      return (
+        <Screen>
+          <ShiftList title={"Available shifts"} />
+        </Screen>
+      );
+
+    default:
+      return (
+        <Screen>
+          <ShiftList />
+        </Screen>
+      );
+  }
+};
+
+export default connect(
+  ({ navigation }) => ({ route: navigation.route }),
+  () => ({})
+)(Navigator);

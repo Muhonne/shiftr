@@ -11,7 +11,6 @@
     "immer": "^1.2.1",
     "react": "16.3.1",
     "react-native": "0.55.3",
-    "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-autoloader": "^1.0.0-rc.13",
