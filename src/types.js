@@ -2,7 +2,7 @@
 
 import constants from "./constants";
 
-export type shift = {
+export type Shift = {
   id: string,
   booked: boolean,
   area: string,
@@ -10,8 +10,8 @@ export type shift = {
   endTime: string
 };
 
-export type shiftArray = Array<shift>;
+export type ShiftArray = Array<Shift>;
 
-export type routes =
+export type Routes =
   | constants.routes.MY_SHIFTS
   | constants.routes.AVAILABLE_ROUTES;

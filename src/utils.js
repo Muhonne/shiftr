@@ -14,5 +14,9 @@ export default {
       // Accounting for the height in either orientation
       (height === 812 || width === 812)
     );
+  },
+  formatDate: (millis: number | string): string => {
+    const date = new Date(millis);
+    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
   }
 };

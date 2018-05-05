@@ -11,13 +11,6 @@ import navigation from "./navigation";
 
 let composer = null;
 if (process.env.NODE_ENV === "development") {
-  console.log(
-    `%c
-                  
-  IN DEVELOPMENT  
-                  `,
-    "background: #39FF14; color: #DD0048;"
-  );
   /* eslint-disable global-require,import/no-extraneous-dependencies */
   composer = require("redux-devtools-extension").composeWithDevTools;
   /* eslint-enable global-require,import/no-extraneous-dependencies */
