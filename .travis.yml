@@ -6,6 +6,6 @@ script:
 notifications:
   email:
     recipients:
-      - hmmuhonen@soikea.com
+      - hmmuhonen@gmail.com
     on_success: change
     on_failure: always
