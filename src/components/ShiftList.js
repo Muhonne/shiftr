@@ -1,12 +1,17 @@
 // @flow
 
 import React from "react";
-import { SafeAreaView, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { reduxAutoloader } from "redux-autoloader";
+import styled from "styled-components";
 
 import apiCalls from "../apiCalls";
-import { Container, Text } from "../components";
+import Text from "./Text";
 import type { shift, shiftArray } from "../types";
+
+const Container = styled.View`
+  flex: 1;
+`;
 
 const ShiftList = (props: {
   data: shiftArray,
@@ -14,24 +19,24 @@ const ShiftList = (props: {
   error: boolean,
   refresh: () => void,
   isRefreshing: boolean,
-  title: string
+  available?: boolean
 }) => {
-  const { title, data, isLoading, error } = props;
+  const { data, isLoading, error, available } = props;
+  let items = [];
+  if (data) {
+    items = data.filter(d => d.booked === !available);
+  }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Container>
-        <Text>
-          {title} {data && data.length}
-        </Text>
-        {data && (
-          <FlatList
-            data={data}
-            renderItem={({ item }) => <Text>{item.area}</Text>}
-            keyExtractor={item => item.id}
-          />
-        )}
-      </Container>
-    </SafeAreaView>
+    <Container>
+      {data && (
+        <FlatList
+          style={{ flex: 1 }}
+          data={items}
+          renderItem={({ item }) => <Text>{item.area}</Text>}
+          keyExtractor={item => item.id}
+        />
+      )}
+    </Container>
   );
 };
 

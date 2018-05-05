@@ -1,38 +1,35 @@
 // @flow
 
 import React from "react";
-import { Animated, Easing, Platform } from "react-native";
+import { Animated, Easing, View } from "react-native";
 import LottieView from "lottie-react-native";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
 import { navigationActions } from "../redux/navigation";
 import constants from "../constants";
-import { Button } from "./index";
+import Button from "./Button";
+import Text from "./Text";
 import utils from "../utils";
 
-/**
- * There are only two animations for the two routes
- * myShifts: starts from 0.333 and ends at 0.666
- * availableShifts: starts from 0.12 and ends at 0.22
- */
-const animationPoints = {
-  start: Platform.OS === "ios" ? 0.333 : 0.3,
-  end: Platform.OS === "ios" ? 0.666 : 0.7
-};
+const myShiftsAnimation = require("../lottie/myshifts.json");
+const availableShiftsAnimation = require("../lottie/work.json");
 
-// you'd think a child element would respect it's parents paddings
-// lottie says eat shit
 const Content = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
   padding: ${constants.spacing.m}px;
-  padding-bottom: ${utils.isIphoneX()
-    ? constants.spacing.m + 10
-    : constants.spacing.m}px;
-  background-color: ${props =>
-    props.active ? constants.colors.greenBg : "#fff"};
+  background-color: rgba(0, 0, 0, 0);
+`;
+
+const StupidIphoneSpacer = styled.View`
+  height: 15;
+  background-color: rgba(0, 0, 0, 0);
+`;
+
+const ButtonText = styled(Text)`
+  font-size: ${constants.fontSize.small};
 `;
 
 class NavButton extends React.Component<
@@ -43,48 +40,17 @@ class NavButton extends React.Component<
     toAvailableShifts: () => void
   },
   {
-    progress: any,
-    endValue: number
+    progress: any
   }
 > {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    /**
-     *  there are three states in which this exists
-     * 1. first render when only active matters
-     *      this is handled internally with currentRoute from redux
-     * 2. going to route when need to animate forwards
-     *      this we need to catch when currentRoute changes to components route
-     * 3. leaving route when need to animate backwards
-     *      this we need to catch when currentoure changes away from components route
-     * */
-    // TODO: is this really the way to do it?
-    if (prevState.currentRoute === "") {
-      return { currentRoute: nextProps.currentRoute };
-    }
-    if (prevState.currentRoute !== nextProps.currentRoute) {
-      if (nextProps.currentRoute === nextProps.toRoute) {
-        console.log(
-          "route has changed and we are coming to my route so animate"
-        );
-        return {
-          progress: new Animated.Value(animationPoints.start),
-          endValue: animationPoints.end,
-          currentRoute: nextProps.currentroute
-        };
-      }
+  state = {
+    progress: new Animated.Value(0.333)
+  };
 
-      return {
-        progress: new Animated.Value(animationPoints.end),
-        endValue: animationPoints.start,
-        currentRoute: nextProps.currentroute
-      };
-    }
-
-    // initial state
-    return { progress: false, currentRoute: nextProps.currentRoute };
+  shouldComponentUpdate(nextProps) {
+    if (this.props.currentRoute !== nextProps.currentRoute) return true;
+    return false;
   }
-
-  state = { currentRoute: "" };
 
   buttonPress = () => {
     if (this.props.toRoute === constants.routes.MY_SHIFTS) {
@@ -95,10 +61,15 @@ class NavButton extends React.Component<
   };
 
   render() {
-    console.log("render button", this.state);
-    if (this.state.progress) {
+    if (this.props.currentRoute !== this.props.toRoute) {
       Animated.timing(this.state.progress, {
-        toValue: this.state.endValue,
+        toValue: 0.333,
+        duration: constants.animationDuration,
+        easing: Easing.linear
+      }).start();
+    } else {
+      Animated.timing(this.state.progress, {
+        toValue: 0.666,
         duration: constants.animationDuration,
         easing: Easing.linear
       }).start();
@@ -106,16 +77,32 @@ class NavButton extends React.Component<
 
     return (
       <Button onPress={this.buttonPress}>
-        <Content active={this.props.currentRoute === this.props.toRoute}>
-          <LottieView
-            source={
-              this.props.toRoute === constants.routes.MY_SHIFTS
-                ? require("../lottie/myshifts.json")
-                : require("../lottie/work.json")
-            }
-            progress={this.state.progress || animationPoints.start}
-          />
-        </Content>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor:
+              this.props.currentRoute === this.props.toRoute
+                ? constants.colors.greenBg
+                : "white"
+          }}
+        >
+          <Content>
+            <LottieView
+              source={
+                this.props.toRoute === constants.routes.MY_SHIFTS
+                  ? myShiftsAnimation
+                  : availableShiftsAnimation
+              }
+              progress={this.state.progress}
+            />
+          </Content>
+          <ButtonText center>
+            {this.props.toRoute === constants.routes.MY_SHIFTS
+              ? "My shifts"
+              : "Available"}
+          </ButtonText>
+          {utils.isIphoneX() && <StupidIphoneSpacer />}
+        </View>
       </Button>
     );
   }

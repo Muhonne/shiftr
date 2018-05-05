@@ -5,7 +5,8 @@ export default {
   },
   fontSize: {
     large: 20,
-    normal: 16
+    normal: 16,
+    small: 12
   },
   spacing: {
     s: 10,
@@ -14,6 +15,7 @@ export default {
   },
   animationDuration: 300,
   colors: {
+    black: "#000",
     darkGreen: "#3f6066",
     lightGreen: "#429dab",
     greenBg: "#ddfaff",

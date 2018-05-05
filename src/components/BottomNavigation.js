@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import NavButton from "./NavButton";
 import constants from "../constants";
-import type { routes } from "../types";
 
 const Container = styled.View`
   flex-direction: row;

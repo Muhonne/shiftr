@@ -1,7 +1,5 @@
 // @flow
-import immer from "immer";
-// https://github.com/mweststrate/immer
-// https://hackernoon.com/introducing-immer-immutability-the-easy-way-9d73d8f71cb3
+
 import actionTypes from "./actionTypes";
 import constants from "../constants";
 import type { routes } from "../types";
@@ -24,7 +22,7 @@ type Store = {
 };
 
 const initialState = {
-  route: constants.routes.AVAILABLE_SHIFTS
+  route: constants.routes.MY_SHIFTS
 };
 // Immer handles everything, we just need to "mutate the state" to get a new immutable state
 /* eslint-disable no-param-reassign,no-fallthrough */

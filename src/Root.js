@@ -1,8 +1,10 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { UIManager } from "react-native";
+import { UIManager, View } from "react-native";
 
 import Navigator from "./Navigator";
+import BottomNavigation from "./components/BottomNavigation";
+
 import store from "./redux/store";
 
 // enable layoutanimations on android
@@ -13,6 +15,9 @@ UIManager.setLayoutAnimationEnabledExperimental &&
 
 export default () => (
   <Provider store={store}>
-    <Navigator />
+    <View style={{ flex: 1 }}>
+      <Navigator />
+      <BottomNavigation />
+    </View>
   </Provider>
 );
