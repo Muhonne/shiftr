@@ -2,13 +2,12 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView, LayoutAnimation, View } from "react-native";
+import { SafeAreaView, LayoutAnimation } from "react-native";
 import styled from "styled-components";
 
 import ShiftList from "./components/ShiftList";
 import type { routes } from "./types";
 import constants from "./constants";
-import Text from "./components/Text";
 
 const Container = styled(SafeAreaView)`
   flex: 1;

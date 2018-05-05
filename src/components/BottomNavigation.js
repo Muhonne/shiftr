@@ -13,13 +13,11 @@ const Container = styled.View`
   border-color: #cacaca;
 `;
 
-const BottomNavigation = () => {
-  return (
-    <Container>
-      <NavButton toRoute={constants.routes.MY_SHIFTS} />
-      <NavButton toRoute={constants.routes.AVAILABLE_SHIFTS} />
-    </Container>
-  );
-};
+const BottomNavigation = () => (
+  <Container>
+    <NavButton toRoute={constants.routes.MY_SHIFTS} />
+    <NavButton toRoute={constants.routes.AVAILABLE_SHIFTS} />
+  </Container>
+);
 
 export default BottomNavigation;

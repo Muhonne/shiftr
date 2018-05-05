@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import apiCalls from "../apiCalls";
 import Text from "./Text";
-import type { shift, shiftArray } from "../types";
+import type { shiftArray } from "../types";
 
 const Container = styled.View`
   flex: 1;

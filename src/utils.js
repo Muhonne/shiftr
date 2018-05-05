@@ -1,7 +1,9 @@
+// @flow
+
 import { Dimensions, Platform } from "react-native";
 
 export default {
-  isIphoneX: () => {
+  isIphoneX: (): boolean => {
     // https://aaronpresley.com/determine-if-on-iphone-x-in-react-native/
     const d = Dimensions.get("window");
     const { height, width } = d;

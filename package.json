@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "haul": "haul"
+    "haul": "haul",
+    "lint": "eslint src/**",
+    "flow": "flow"
   },
   "dependencies": {
     "immer": "^1.2.1",

@@ -1,3 +1,5 @@
+// @flow
+
 export default {
   BOOK_SHIFT_SAGA: "BOOK_SHIFT_SAGA",
   BOOKING_SHIFT: "BOOKING_SHIFT",

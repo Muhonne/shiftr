@@ -1,8 +1,9 @@
 // @flow
 
-import actionTypes from "./actionTypes";
 import constants from "../constants";
 import type { routes } from "../types";
+
+const actionTypes = constants.routes;
 
 export const navigationActions = {
   toMyShifts: () => ({
@@ -14,7 +15,7 @@ export const navigationActions = {
 };
 
 type Action = {
-  type: actionTypes.TO_MY_SHIFTS | actionTypes.TO_AVAILABLE_SHIFTS
+  type: routes
 };
 
 type Store = {
