@@ -1,10 +1,10 @@
 // @flow
 
 import { Dimensions, Platform } from "react-native";
-
+import moment from "moment";
 export default {
   isIphoneX: (): boolean => {
-    // https://aaronpresley.com/determine-if-on-iphone-x-in-react-native/
+    // lazy copy-paste https://aaronpresley.com/determine-if-on-iphone-x-in-react-native/
     const d = Dimensions.get("window");
     const { height, width } = d;
 
@@ -15,12 +15,10 @@ export default {
       (height === 812 || width === 812)
     );
   },
-  formatDate: (millis: number | string): string => {
-    const date = new Date(millis);
-    return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
-  },
-  getDuration: (start: number | string, end: number | string) => {
-    const difference = new Date(new Date(end) - new Date(start));
-    return `${difference.getHours()}h ${difference.getMinutes()}m`;
-  }
+  formatDate: (millis: number | string): string =>
+    moment(millis).format("DD.MM.YYYY H:mm"),
+  getDuration: (start: number | string, end: number | string) =>
+    // lazy copy-paste https://stackoverflow.com/questions/18623783/get-the-time-difference-between-two-datetimes
+    // will work ONLY when the total duration is less than 24 hours
+    moment.utc(moment(end).diff(moment(start))).format("H[h] mm[min]")
 };

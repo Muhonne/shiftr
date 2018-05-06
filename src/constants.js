@@ -4,7 +4,7 @@ export default {
     AVAILABLE_SHIFTS: "AVAILABLE_SHIFTS"
   },
   fontSize: {
-    large: 20,
+    large: 18,
     normal: 16,
     small: 12
   },

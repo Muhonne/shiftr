@@ -15,10 +15,12 @@ import type { Shift } from "../types";
 import constants from "../constants";
 import utils from "../utils";
 import AnimatedView from "./AnimatedView";
+import BookShift from "./BookShift";
 
 const Container = styled.View`
   padding: ${constants.spacing.s}px;
-  margin-top: ${constants.spacing.s}px;
+  margin-top: ${constants.spacing.s / 2}px;
+  margin-bottom: ${constants.spacing.s / 2}px;
   margin-left: ${constants.spacing.s}px;
   margin-right: ${constants.spacing.s}px;
   border: 1px;
@@ -27,17 +29,18 @@ const Container = styled.View`
 `;
 
 const Row = styled.View`
-  flex-direction: ${props => (props.open ? "column" : "row")};
-  align-items: ${props => (props.open ? "flex-start" : "center")};
-`;
-
-const ContentRow = styled.View`
-  margin-bottom: ${props => (props.open ? constants.spacing.s : 0)};
   flex-direction: row;
   align-items: center;
 `;
 
-const OpenContent = styled.View``;
+const ContentRow = styled(Row)`
+  margin-bottom: ${props => (props.open ? constants.spacing.s : 0)};
+`;
+
+const OpenContent = styled.View`
+  flex: 0.5;
+  margin: ${constants.spacing.s}px;
+`;
 
 const Icon = styled.Image`
   width: ${constants.fontSize.normal};
@@ -82,7 +85,7 @@ class ShiftListItem extends React.Component<
   viewTransforms = [
     { scaleX: this.interPolateValue(1, 1.1) },
     { scaleY: this.interPolateValue(1, 1.1) },
-    { translateX: this.interPolateValue(0, 5) }
+    { translateX: this.interPolateValue(0, 10) }
   ];
 
   render() {
@@ -93,34 +96,34 @@ class ShiftListItem extends React.Component<
       <TouchableWithoutFeedback onPress={this.toggle}>
         <Container>
           <Row open={this.state.open}>
-            <AnimatedView width={50} transforms={this.viewTransforms}>
+            <AnimatedView width={45} transforms={this.viewTransforms}>
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/place.png")} />
                 <Text>{shift.area}</Text>
               </ContentRow>
             </AnimatedView>
-            <AnimatedView width={50} transforms={this.viewTransforms}>
+            <AnimatedView width={55} transforms={this.viewTransforms}>
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/time.png")} />
-                <Text>{`${utils.formatDate(shift.startTime)}`}</Text>
+                <Text>
+                  {`${utils.formatDate(shift.startTime)}`}
+                  {open && ` -  ${utils.formatDate(shift.endTime)}`}
+                </Text>
               </ContentRow>
             </AnimatedView>
           </Row>
           {open && (
-            <OpenContent>
-              <Text>Shift ends at {utils.formatDate(shift.endTime)}</Text>
-              <Text>
-                Shift duration{" "}
-                {utils.getDuration(shift.startTime, shift.endTime)}
-              </Text>
-              <Button
-                onPress={() => {
-                  console.log("keks");
-                }}
-              >
-                <Text>Book/Cancel</Text>
-              </Button>
-            </OpenContent>
+            <Row>
+              <OpenContent>
+                <Text>Shift duration</Text>
+                <Text large>
+                  {utils.getDuration(shift.startTime, shift.endTime)}
+                </Text>
+              </OpenContent>
+              <OpenContent>
+                <BookShift shiftId={shift.id} />
+              </OpenContent>
+            </Row>
           )}
         </Container>
       </TouchableWithoutFeedback>
