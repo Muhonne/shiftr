@@ -18,5 +18,9 @@ export default {
   formatDate: (millis: number | string): string => {
     const date = new Date(millis);
     return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  },
+  getDuration: (start: number | string, end: number | string) => {
+    const difference = new Date(new Date(end) - new Date(start));
+    return `${difference.getHours()}h ${difference.getMinutes()}m`;
   }
 };
