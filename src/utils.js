@@ -2,6 +2,8 @@
 
 import { Dimensions, Platform } from "react-native";
 import moment from "moment";
+import type { Shift, ShiftArray } from "./types";
+
 export default {
   isIphoneX: (): boolean => {
     // lazy copy-paste https://aaronpresley.com/determine-if-on-iphone-x-in-react-native/
@@ -17,8 +19,14 @@ export default {
   },
   formatDate: (millis: number | string): string =>
     moment(millis).format("DD.MM.YYYY H:mm"),
-  getDuration: (start: number | string, end: number | string) =>
+  getDuration: (start: string, end: string) =>
     // lazy copy-paste https://stackoverflow.com/questions/18623783/get-the-time-difference-between-two-datetimes
     // will work ONLY when the total duration is less than 24 hours
-    moment.utc(moment(end).diff(moment(start))).format("H[h] mm[min]")
+    moment.utc(moment(end).diff(moment(start))).format("H[h] mm[min]"),
+  filterPastShifts: (shifts: ShiftArray) => {
+    const now = new Date().getTime();
+    return shifts.filter((s: Shift) => {
+      return now < parseInt(s.startTime, 10);
+    });
+  }
 };

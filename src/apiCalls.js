@@ -6,8 +6,8 @@ export default {
   getShifts: () => fetch(`${apiUrl}/shifts`).then(response => response.json()),
   bookShift: (shiftId: string) => {
     console.log("tryna book", shiftId);
-    return fetch(`${apiUrl}/shifts/${shiftId}/book`).then(response =>
-      response.json()
-    );
+    return fetch(`${apiUrl}/shifts/${shiftId}/book`, { method: "POST" }).then(
+      response => response.json()
+    ).catch(err => err);
   }
 };

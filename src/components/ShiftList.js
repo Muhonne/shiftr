@@ -11,6 +11,7 @@ import ShiftListItem from "./ShiftListItem";
 import Button from "./Button";
 import Text from "./Text";
 import constants from "../constants";
+import utils from "../utils";
 
 const Container = styled.View`
   flex: 1;
@@ -87,5 +88,12 @@ export default reduxAutoloader(
   {
     name: "shifts", // A unique name for the loader
     apiCall: apiCalls.getShifts
+  },
+  state => {
+    console.log("filter shifts", state.data);
+    return {
+      ...state,
+      data: state.data ? utils.filterPastShifts(state.data) : undefined
+    };
   }
 )(ShiftList);
