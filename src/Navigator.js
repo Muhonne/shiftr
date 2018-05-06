@@ -6,7 +6,7 @@ import { SafeAreaView, LayoutAnimation } from "react-native";
 import styled from "styled-components";
 
 import ShiftList from "./components/ShiftList";
-import type { routes } from "./types";
+import type { Routes } from "./types";
 import constants from "./constants";
 
 const Container = styled(SafeAreaView)`
@@ -14,7 +14,7 @@ const Container = styled(SafeAreaView)`
 `;
 
 type Props = {
-  route: routes
+  route: Routes
 };
 
 class Navigator extends React.Component<Props, {}> {

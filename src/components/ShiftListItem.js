@@ -8,14 +8,15 @@ import {
   LayoutAnimation,
   TouchableWithoutFeedback
 } from "react-native";
+import { reduxAutoloader } from "redux-autoloader";
 
+import apiCalls from "../apiCalls";
 import Text from "./Text";
-import Button from "./Button";
 import type { Shift } from "../types";
 import constants from "../constants";
 import utils from "../utils";
 import AnimatedView from "./AnimatedView";
-import BookShift from "./BookShift";
+import ShiftButton from "./ShiftButton";
 
 const Container = styled.View`
   padding: ${constants.spacing.s}px;
@@ -48,8 +49,14 @@ const Icon = styled.Image`
   margin-right: ${constants.spacing.s};
 `;
 
+type Props = {
+  shift: Shift,
+  data?: Shift,
+  refresh: () => void,
+};
+
 class ShiftListItem extends React.Component<
-  { shift: Shift },
+  Props,
   { open: boolean, animate: any }
 > {
   state = {
@@ -89,8 +96,13 @@ class ShiftListItem extends React.Component<
   ];
 
   render() {
-    const { shift } = this.props;
+    // initial data from parent, override with data from shifts own endpoint
+    const { id, area, startTime, endTime, booked } =
+      this.props.data || this.props.shift;
+    const { refresh } = this.props;
     const { open } = this.state;
+
+    LayoutAnimation.easeInEaseOut();
 
     return (
       <TouchableWithoutFeedback onPress={this.toggle}>
@@ -99,15 +111,15 @@ class ShiftListItem extends React.Component<
             <AnimatedView width={45} transforms={this.viewTransforms}>
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/place.png")} />
-                <Text>{shift.area}</Text>
+                <Text>{area}</Text>
               </ContentRow>
             </AnimatedView>
             <AnimatedView width={55} transforms={this.viewTransforms}>
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/time.png")} />
                 <Text>
-                  {`${utils.formatDate(shift.startTime)}`}
-                  {open && ` -  ${utils.formatDate(shift.endTime)}`}
+                  {`${utils.formatDate(startTime)}`}
+                  {open && ` -  ${utils.formatDate(endTime)}`}
                 </Text>
               </ContentRow>
             </AnimatedView>
@@ -116,12 +128,20 @@ class ShiftListItem extends React.Component<
             <Row>
               <OpenContent>
                 <Text>Shift duration</Text>
-                <Text large>
-                  {utils.getDuration(shift.startTime, shift.endTime)}
-                </Text>
+                <Text large>{utils.getDuration(startTime, endTime)}</Text>
               </OpenContent>
               <OpenContent>
-                <BookShift shiftId={shift.id} />
+                {/*
+                 ShiftButton has a funky key because we want to trigger the animation for
+                 the whole view, not just the label text because animating text sucks
+                 */}
+                <ShiftButton
+                  key={`${id}${booked.toString()}`}
+                  shiftId={id}
+                  refreshParent={refresh}
+                  parentBooked={booked}
+                  label={booked ? "Cancel" : "Book"}
+                />
               </OpenContent>
             </Row>
           )}
@@ -130,4 +150,8 @@ class ShiftListItem extends React.Component<
     );
   }
 }
-export default ShiftListItem;
+export default reduxAutoloader({
+  startOnMount: false,
+  name: (props: Props) => props.shift.id,
+  apiCall: (props: Props) => apiCalls.getShift(props.shift.id)
+})(ShiftListItem);

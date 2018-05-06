@@ -6,7 +6,6 @@ import {
 
 import createSagaMiddleware from "redux-saga";
 
-import shifts from "./shifts";
 import navigation from "./navigation";
 
 let composer = null;
@@ -21,7 +20,6 @@ if (process.env.NODE_ENV === "development") {
 const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
   reduxAutoloader,
-  ...shifts, // avoid shifts.shifts habberdashery
   navigation
 });
 const store = createStore(reducers, composer(applyMiddleware(sagaMiddleware)));

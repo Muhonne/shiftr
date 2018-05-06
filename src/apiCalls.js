@@ -1,13 +1,19 @@
-import { Platform } from "react-native";
-
 const apiUrl = "http://localhost:8080";
 
 export default {
   getShifts: () => fetch(`${apiUrl}/shifts`).then(response => response.json()),
-  bookShift: (shiftId: string) => {
-    console.log("tryna book", shiftId);
+  getShift: (id: string) =>
+    fetch(`${apiUrl}/shifts/${id}`).then(response => response.json()),
+  book: (shiftId: string) => {
+    console.log("BOOKING", shiftId);
     return fetch(`${apiUrl}/shifts/${shiftId}/book`, { method: "POST" }).then(
       response => response.json()
-    ).catch(err => err);
+    );
+  },
+  cancel: (shiftId: string) => {
+    console.log("CANCELING");
+    return fetch(`${apiUrl}/shifts/${shiftId}/cancel`, { method: "POST" }).then(
+      response => response.json()
+    );
   }
 };

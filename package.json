@@ -11,9 +11,7 @@
     "flow": "flow"
   },
   "dependencies": {
-    "immer": "^1.2.1",
     "lottie-react-native": "^2.5.0",
-    "luxon": "^1.2.0",
     "moment": "^2.22.1",
     "react": "16.3.1",
     "react-native": "0.55.3",

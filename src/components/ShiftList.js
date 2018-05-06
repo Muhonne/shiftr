@@ -29,6 +29,19 @@ const ErrorButton = styled.View`
   border-radius: ${constants.spacing.s};
 `;
 
+const Placeholder = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin: ${constants.spacing.l}px;
+`;
+
+const Loading = styled.View`
+  position: absolute;
+  top: ${constants.spacing.l};
+  left: ${constants.spacing.l};
+  right: ${constants.spacing.l};
+`;
+
 class ShiftList extends React.Component<
   {
     data: ShiftArray,
@@ -40,7 +53,16 @@ class ShiftList extends React.Component<
   },
   {}
 > {
-  renderShift = ({ item }) => <ShiftListItem shift={item} />;
+  renderShift = ({ item }) => {
+    if (item.placeholder) {
+      return (
+        <Placeholder>
+          <Text>No booked shifts. Drag down to refresh.</Text>
+        </Placeholder>
+      );
+    }
+    return <ShiftListItem shift={item} />;
+  };
 
   render() {
     const {
@@ -51,7 +73,6 @@ class ShiftList extends React.Component<
       refresh,
       isRefreshing
     } = this.props;
-    const active = isLoading || isRefreshing;
     let items = [];
     if (data) {
       items = data.filter((d: Shift): boolean => d.booked === !available);
@@ -59,8 +80,13 @@ class ShiftList extends React.Component<
 
     return (
       <Container>
-        {active && (
-          <ActivityIndicator size="large" color={constants.colors.darkGreen} />
+        {isLoading && (
+          <Loading>
+            <ActivityIndicator
+              size="large"
+              color={constants.colors.darkGreen}
+            />
+          </Loading>
         )}
         {error && (
           <Button onPress={refresh}>
@@ -72,7 +98,11 @@ class ShiftList extends React.Component<
         {data && (
           <FlatList
             style={{ flex: 1 }}
-            data={items}
+            data={
+              items.length === 0
+                ? [{ placeholder: true, id: "placeholder" }]
+                : items
+            }
             renderItem={this.renderShift}
             keyExtractor={item => item.id}
             onRefresh={refresh}
@@ -89,11 +119,8 @@ export default reduxAutoloader(
     name: "shifts", // A unique name for the loader
     apiCall: apiCalls.getShifts
   },
-  state => {
-    console.log("filter shifts", state.data);
-    return {
-      ...state,
-      data: state.data ? utils.filterPastShifts(state.data) : undefined
-    };
-  }
+  state => ({
+    ...state,
+    data: state.data ? utils.filterPastShifts(state.data) : undefined
+  })
 )(ShiftList);

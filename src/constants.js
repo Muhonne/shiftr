@@ -16,10 +16,11 @@ export default {
   animationDuration: 300,
   colors: {
     black: "#000",
+    white: "#fff",
     darkGreen: "#3f6066",
     lightGreen: "#429dab",
     greenBg: "#ddfaff",
     grey: "#9ca09f",
-    mauve: "#f5d7ae"
+    red: "#ef727a"
   }
 };
