@@ -1,5 +1,5 @@
 import React from "react";
-import { PickerIOS } from "react-native";
+import { Modal, SafeAreaView } from "react-native";
 import styled from "styled-components";
 
 import constants from "../constants";
@@ -14,6 +14,23 @@ const Container = styled.View`
   margin: ${constants.spacing.s}px;
 `;
 
+const CityButton = styled.View`
+  padding: ${constants.spacing.s}px;
+  border-bottom-width: 1;
+  border-bottom-color: ${constants.colors.grey};
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Selected = styled.View`
+  width: ${constants.spacing.s};
+  height: ${constants.spacing.s};
+  border-radius: ${constants.spacing.s};
+  background-color: ${constants.colors.darkGreen};
+  position: absolute;
+  right: ${constants.spacing.s};
+`;
+
 export default class CityFilter extends React.Component<
   {
     filterCity: CityTypes,
@@ -22,28 +39,47 @@ export default class CityFilter extends React.Component<
   {}
 > {
   state = {
-    open: true
+    open: false
   };
 
   toggle = () => {
     this.setState({ open: !this.state.open });
   };
 
+  selectCity = (city: CityTypes) => {
+    this.props.filterByCity(city);
+    this.setState({ open: false });
+  };
+
   render() {
     const { open } = this.state;
-    const { filterByCity, filterCity } = this.props;
-    if (!open) {
-      return (
-        <Container>
-          <Button onPress={this.toggle}>
-            <Text center style={{ color: constants.colors.darkGreen }}>
-              Helsinki
-            </Text>
-          </Button>
-        </Container>
-      );
-    }
-
-    return <Text>plz be implementing</Text>;
+    const { filterCity } = this.props;
+    return (
+      <Container>
+        <Button onPress={this.toggle}>
+          <Text center style={{ color: constants.colors.darkGreen }}>
+            {filterCity}
+          </Text>
+        </Button>
+        <Modal
+          visible={open}
+          onRequestClose={this.toggle}
+          animationType={"slide"}
+        >
+          <SafeAreaView style={{ marginTop: constants.spacing.l * 2 }}>
+            {constants.cities.map(c => (
+              <Button key={c} onPress={() => this.selectCity(c)}>
+                <CityButton>
+                  <Text style={{ color: constants.colors.darkGreen }}>
+                    {c || "All cities"}
+                  </Text>
+                  {c === filterCity && <Selected />}
+                </CityButton>
+              </Button>
+            ))}
+          </SafeAreaView>
+        </Modal>
+      </Container>
+    );
   }
 }

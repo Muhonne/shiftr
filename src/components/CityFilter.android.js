@@ -19,9 +19,13 @@ const CityFilter = (props: {
   const { filterCity, filterByCity } = props;
   return (
     <Container>
-      <Picker onValueChange={filterByCity} selectedValue={filterCity}>
+      <Picker
+        onValueChange={filterByCity}
+        selectedValue={filterCity}
+        style={{ color: constants.colors.darkGreen }}
+      >
         {constants.cities.map(city => (
-          <Picker.Item key={city} label={city || "Choose city"} value={city} />
+          <Picker.Item key={city} label={city || "All cities"} value={city} />
         ))}
       </Picker>
     </Container>

@@ -16,11 +16,6 @@ const Content = styled.View`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-const StupidIphoneSpacer = styled.View`
-  height: 15;
-  background-color: rgba(0, 0, 0, 0);
-`;
-
 const Indicator = styled(Animated.View)`
   margin-top: ${constants.spacing.s};
   background-color: ${constants.colors.darkGreen};

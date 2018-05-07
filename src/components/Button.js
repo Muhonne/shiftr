@@ -12,12 +12,16 @@ import constants from "../constants";
 
 const Button = (props: {
   children: ChildrenArray<Node>,
-  onPress: () => void
+  onPress: () => void,
+  style: any
 }) =>
   Platform.OS === "ios" ? (
-    <TouchableWithoutFeedback>{props.children}</TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={props.onPress} style={props.style}>
+      {props.children}
+    </TouchableWithoutFeedback>
   ) : (
     <TouchableNativeFeedback
+      style={props.style}
       onPress={props.onPress}
       background={TouchableNativeFeedback.Ripple(
         constants.colors.greenBg,

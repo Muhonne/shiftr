@@ -2,10 +2,15 @@
 
 import React from "react";
 import { Provider } from "react-redux";
-import { UIManager, View, SafeAreaView } from "react-native";
+import { UIManager, SafeAreaView } from "react-native";
 import styled from "styled-components";
 
+/* eslint-disable import/no-unresolved,import/extensions */
+// $FlowFixMe
 import CityFilter from "./components/CityFilter";
+// $FlowFixMe
+import DateFilter from "./components/DateFilter";
+/* eslint-enable import/no-unresolved,import/extensions */
 import ShiftList from "./components/ShiftList";
 import NavButton from "./components/NavButton";
 import constants from "./constants";
@@ -51,9 +56,9 @@ export default class Root extends React.Component<
               filterCity={this.state.filterCity}
               filterByCity={this.filterByCity}
             />
-            <CityFilter
-              filterCity={this.state.filterCity}
-              filterByCity={this.filterByCity}
+            <DateFilter
+              filterDate={this.state.filterDate}
+              filterByDate={this.filterByDate}
             />
           </TopContainer>
           <ShiftList
