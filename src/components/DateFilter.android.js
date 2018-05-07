@@ -29,10 +29,11 @@ const DateFilter = (props: { filterDate: string, filterByDate: string }) => {
       if (action !== DatePickerAndroid.dismissedAction) {
         // Selected year, month (0-11), day
         const date = new Date(year, month, day);
-        filterByDate(utils.dateToString(date));
+        filterByDate(date);
       }
     } catch ({ code, message }) {
-      console.warn("Cannot open date picker", message);
+      // when would this fail?
+      console.warn("Cannot open date picker", code, message);
     }
   };
 
@@ -40,7 +41,7 @@ const DateFilter = (props: { filterDate: string, filterByDate: string }) => {
     <Container>
       <Button onPress={getDate}>
         <Text center style={{ color: constants.colors.darkGreen }}>
-          {filterDate || "All dates"}
+          {utils.dateToString(filterDate) || "All dates"}
         </Text>
       </Button>
     </Container>

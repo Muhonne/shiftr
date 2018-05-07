@@ -58,13 +58,13 @@ export default class CityFilter extends React.Component<
       <Container>
         <Button onPress={this.toggle}>
           <Text center style={{ color: constants.colors.darkGreen }}>
-            {filterCity}
+            {filterCity || "All cities"}
           </Text>
         </Button>
         <Modal
           visible={open}
           onRequestClose={this.toggle}
-          animationType={"slide"}
+          animationType={constants.modalAnimation}
         >
           <SafeAreaView style={{ marginTop: constants.spacing.l * 2 }}>
             {constants.cities.map(c => (

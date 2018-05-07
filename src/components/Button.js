@@ -13,7 +13,7 @@ import constants from "../constants";
 const Button = (props: {
   children: ChildrenArray<Node>,
   onPress: () => void,
-  style: any
+  style?: any
 }) =>
   Platform.OS === "ios" ? (
     <TouchableWithoutFeedback onPress={props.onPress} style={props.style}>
@@ -31,5 +31,9 @@ const Button = (props: {
       {props.children}
     </TouchableNativeFeedback>
   );
+
+Button.defaultProps = {
+  style: {}
+};
 
 export default Button;
