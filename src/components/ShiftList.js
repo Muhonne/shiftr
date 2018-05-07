@@ -6,11 +6,12 @@ import { reduxAutoloader } from "redux-autoloader";
 import styled from "styled-components";
 
 import apiCalls from "../apiCalls";
-import type { Shift, ShiftArray } from "../types";
+
 import ShiftListItem from "./ShiftListItem";
 import Button from "./Button";
 import Text from "./Text";
 import constants from "../constants";
+import type { Shift, ShiftArray, CityTypes } from "../constants";
 import utils from "../utils";
 
 const Container = styled.View`
@@ -49,7 +50,9 @@ class ShiftList extends React.Component<
     error: boolean,
     refresh: () => void,
     isRefreshing: boolean,
-    available?: boolean
+    filterBooked: boolean,
+    filterCity: CityTypes,
+    filterDate: string
   },
   {}
 > {
@@ -69,13 +72,18 @@ class ShiftList extends React.Component<
       data,
       isLoading,
       error,
-      available,
       refresh,
-      isRefreshing
+      isRefreshing,
+      filterBooked,
+      filterCity,
+      filterDate
     } = this.props;
     let items = [];
     if (data) {
-      items = data.filter((d: Shift): boolean => d.booked === !available);
+      items = data
+        .filter((s: Shift): boolean => s.booked === filterBooked)
+        .filter(s => !filterCity || s.area === filterCity);
+      //.filter(s => !filterDate || utils.dateMatch(s, filterDate));
     }
 
     return (

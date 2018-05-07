@@ -51,7 +51,9 @@ const ShiftButton = (props: Props) => {
     <View>
       <Button onPress={refresh}>
         <ButtonContent>
-          <Text large>{label}</Text>
+          <Text large style={{ color: constants.colors.darkGreen }}>
+            {label}
+          </Text>
           {isLoading && <ActivityIndicator size="small" />}
         </ButtonContent>
       </Button>

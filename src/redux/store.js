@@ -6,8 +6,6 @@ import {
 
 import createSagaMiddleware from "redux-saga";
 
-import navigation from "./navigation";
-
 let composer = null;
 if (process.env.NODE_ENV === "development") {
   /* eslint-disable global-require,import/no-extraneous-dependencies */
@@ -19,8 +17,7 @@ if (process.env.NODE_ENV === "development") {
 
 const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
-  reduxAutoloader,
-  navigation
+  reduxAutoloader
 });
 const store = createStore(reducers, composer(applyMiddleware(sagaMiddleware)));
 

@@ -15,7 +15,6 @@ import Text from "./Text";
 import type { Shift } from "../types";
 import constants from "../constants";
 import utils from "../utils";
-import AnimatedView from "./AnimatedView";
 import ShiftButton from "./ShiftButton";
 
 const Container = styled.View`
@@ -52,7 +51,7 @@ const Icon = styled.Image`
 type Props = {
   shift: Shift,
   data?: Shift,
-  refresh: () => void,
+  refresh: () => void
 };
 
 class ShiftListItem extends React.Component<
@@ -92,6 +91,7 @@ class ShiftListItem extends React.Component<
   viewTransforms = [
     { scaleX: this.interPolateValue(1, 1.1) },
     { scaleY: this.interPolateValue(1, 1.1) },
+    // translateX is pretty much random that works
     { translateX: this.interPolateValue(0, 10) }
   ];
 
@@ -108,13 +108,17 @@ class ShiftListItem extends React.Component<
       <TouchableWithoutFeedback onPress={this.toggle}>
         <Container>
           <Row open={this.state.open}>
-            <AnimatedView width={45} transforms={this.viewTransforms}>
+            <Animated.View
+              style={{ width: "45%", transform: this.viewTransforms }}
+            >
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/place.png")} />
                 <Text>{area}</Text>
               </ContentRow>
-            </AnimatedView>
-            <AnimatedView width={55} transforms={this.viewTransforms}>
+            </Animated.View>
+            <Animated.View
+              style={{ width: "55%", transform: this.viewTransforms }}
+            >
               <ContentRow open={this.state.open}>
                 <Icon source={require("../img/time.png")} />
                 <Text>
@@ -122,7 +126,7 @@ class ShiftListItem extends React.Component<
                   {open && ` -  ${utils.formatDate(endTime)}`}
                 </Text>
               </ContentRow>
-            </AnimatedView>
+            </Animated.View>
           </Row>
           {open && (
             <Row>

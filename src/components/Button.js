@@ -20,7 +20,7 @@ const Button = (props: {
     <TouchableNativeFeedback
       onPress={props.onPress}
       background={TouchableNativeFeedback.Ripple(
-        constants.colors.lightGreen,
+        constants.colors.greenBg,
         false
       )}
     >

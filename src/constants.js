@@ -1,8 +1,6 @@
+// @flow
+
 export default {
-  routes: {
-    MY_SHIFTS: "MY_SHIFTS",
-    AVAILABLE_SHIFTS: "AVAILABLE_SHIFTS"
-  },
   fontSize: {
     large: 18,
     normal: 16,
@@ -19,8 +17,27 @@ export default {
     white: "#fff",
     darkGreen: "#3f6066",
     lightGreen: "#429dab",
-    greenBg: "#ddfaff",
+    greenBg: "#b6d2d1",
     grey: "#9ca09f",
     red: "#ef727a"
-  }
+  },
+  cities: [
+    "",
+    // should probably be gotten from available shifts
+    "Helsinki",
+    "Turku",
+    "Tampere"
+  ]
 };
+
+export type CityTypes = "" | "Helsinki" | "Turku" | "Tampere";
+
+export type Shift = {
+  id: string,
+  booked: boolean,
+  area: string,
+  startTime: string,
+  endTime: string
+};
+
+export type ShiftArray = Array<Shift>;

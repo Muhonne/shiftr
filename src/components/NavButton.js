@@ -1,25 +1,18 @@
 // @flow
 
 import React from "react";
-import { Animated, Easing, View } from "react-native";
-import LottieView from "lottie-react-native";
-import { connect } from "react-redux";
+import { Animated, Easing } from "react-native";
 import styled from "styled-components";
 
-import { navigationActions } from "../redux/navigation";
 import constants from "../constants";
 import Button from "./Button";
 import Text from "./Text";
-import utils from "../utils";
-
-const myShiftsAnimation = require("../lottie/myshifts.json");
-const availableShiftsAnimation = require("../lottie/work.json");
 
 const Content = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: ${constants.spacing.m}px;
+  padding: ${constants.spacing.s}px;
   background-color: rgba(0, 0, 0, 0);
 `;
 
@@ -28,90 +21,74 @@ const StupidIphoneSpacer = styled.View`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-const ButtonText = styled(Text)`
-  font-size: ${constants.fontSize.small};
+const Indicator = styled(Animated.View)`
+  margin-top: ${constants.spacing.s};
+  background-color: ${constants.colors.darkGreen};
+  height: 2;
+  width: 80%;
 `;
 
-class NavButton extends React.Component<
+type Props = {
+  active: boolean,
+  onPress: () => void,
+  label: string
+};
+
+export default class NavButton extends React.Component<
+  Props,
   {
-    toRoute: string,
-    currentRoute: string,
-    toMyShifts: () => void,
-    toAvailableShifts: () => void
-  },
-  {
-    progress: any
+    animate: any
   }
 > {
   state = {
-    progress: new Animated.Value(0.333)
+    animate: new Animated.Value(0)
   };
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.currentRoute !== nextProps.currentRoute) return true;
-    return false;
-  }
+  shouldComponentUpdate = (nextProps: Props) =>
+    nextProps.active !== this.props.active;
 
-  buttonPress = () => {
-    if (this.props.toRoute === constants.routes.MY_SHIFTS) {
-      this.props.toMyShifts();
-    } else {
-      this.props.toAvailableShifts();
-    }
+  animate = (toValue: number) => {
+    Animated.timing(this.state.animate, {
+      toValue,
+      duration: constants.animationDuration,
+      easing: Easing.linear,
+      useNativeDriver: true
+    }).start();
   };
+
+  interPolateValue = (start: number, end: number): any =>
+    this.state.animate.interpolate({
+      inputRange: [0, 1],
+      outputRange: [start, end],
+    });
+
+  viewTransforms = [
+    { scaleX: this.interPolateValue(1, 1.1) },
+    { scaleY: this.interPolateValue(1, 1.1) }
+  ];
 
   render() {
-    if (this.props.currentRoute !== this.props.toRoute) {
-      Animated.timing(this.state.progress, {
-        toValue: 0.333,
-        duration: constants.animationDuration,
-        easing: Easing.linear
-      }).start();
+    const { active, onPress, label } = this.props;
+
+    if (active) {
+      this.animate(1);
     } else {
-      Animated.timing(this.state.progress, {
-        toValue: 0.666,
-        duration: constants.animationDuration,
-        easing: Easing.linear
-      }).start();
+      this.animate(0);
     }
 
     return (
-      <Button onPress={this.buttonPress}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor:
-              this.props.currentRoute === this.props.toRoute
-                ? constants.colors.greenBg
-                : "white"
-          }}
-        >
-          <Content>
-            <LottieView
-              source={
-                this.props.toRoute === constants.routes.MY_SHIFTS
-                  ? myShiftsAnimation
-                  : availableShiftsAnimation
-              }
-              progress={this.state.progress}
-            />
-          </Content>
-          <ButtonText center>
-            {this.props.toRoute === constants.routes.MY_SHIFTS
-              ? "My shifts"
-              : "Available"}
-          </ButtonText>
-          {utils.isIphoneX() && <StupidIphoneSpacer />}
-        </View>
+      <Button onPress={onPress}>
+        <Content>
+          <Animated.View style={{ transform: this.viewTransforms }}>
+            <Text center style={{ color: constants.colors.darkGreen }}>
+              {label}
+            </Text>
+          </Animated.View>
+          {active && (
+            <Indicator style={{ opacity: this.interPolateValue(0, 1) }} />
+          )}
+        </Content>
       </Button>
     );
   }
 }
-
-export default connect(
-  ({ navigation }) => ({ currentRoute: navigation.route }),
-  dispatch => ({
-    toMyShifts: () => dispatch(navigationActions.toMyShifts()),
-    toAvailableShifts: () => dispatch(navigationActions.toAvailableShifts())
-  })
-)(NavButton);
