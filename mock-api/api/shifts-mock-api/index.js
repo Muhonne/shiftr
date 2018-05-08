@@ -12,7 +12,6 @@ const routes = [
     method: "GET",
     path: "/",
     handler: async () => {
-      console.log("Getting shifts");
       await delay(500);
       return db.shifts.list();
     }

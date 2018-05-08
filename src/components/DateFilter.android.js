@@ -40,7 +40,7 @@ const DateFilter = (props: { filterDate: string, filterByDate: string }) => {
   return (
     <Button onPress={getDate}>
       <Container>
-        <Text center style={{ color: constants.colors.woltishBlue }}>
+        <Text center blue>
           {utils.dateToString(filterDate) || "All dates"}
         </Text>
       </Container>

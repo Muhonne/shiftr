@@ -47,7 +47,7 @@ export default class Root extends React.Component<
   { filterBooked: boolean, filterCity: CityTypes, filterDate: string | Date }
 > {
   state = {
-    filterBooked: false,
+    filterBooked: true,
     filterCity: "",
     filterDate: ""
   };
@@ -75,9 +75,7 @@ export default class Root extends React.Component<
             {(Boolean(filterDate) || Boolean(filterCity)) && (
               <Button onPress={this.resetTopFilters}>
                 <ResetButton>
-                  <Text style={{ color: constants.colors.woltishBlue }}>
-                    Clear
-                  </Text>
+                  <Text blue>Clear</Text>
                 </ResetButton>
               </Button>
             )}

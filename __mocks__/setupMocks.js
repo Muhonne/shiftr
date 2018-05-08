@@ -1,3 +1,4 @@
-jest.mock("../src/LayoutAnimation", () => {
-  return () => {};
-});
+jest.mock("../src/animate", () => ({
+  layout: () => {},
+  toValue: () => {}
+}));

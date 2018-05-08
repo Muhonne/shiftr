@@ -3,7 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../Button";
-import LayoutAnimation from "../../LayoutAnimation";
+import animate from "../../animate";
 import ActivityIndicator from "../ActivityIndicator";
 import Text from "../Text";
 import constants from "../../constants";
@@ -26,18 +26,12 @@ type Props = {
   data: any,
   refresh: () => void,
   refreshParent: () => void,
-  parentBooked: boolean,
+  parentBooked: boolean
 };
 
 const ShiftButton = (props: Props) => {
-  LayoutAnimation();
-  const {
-    refresh,
-    data,
-    isLoading,
-    refreshParent,
-    parentBooked,
-  } = props;
+  animate.layout();
+  const { refresh, data, isLoading, refreshParent, parentBooked } = props;
   if (data && !data.statusCode && data.booked !== parentBooked) {
     // if it's stupid but it works it's not stupid
     // regardless this is a bit shit and there is no refreshing/loading indicator on the parent so
@@ -49,12 +43,7 @@ const ShiftButton = (props: Props) => {
     <View>
       <Button onPress={refresh}>
         <ButtonContent error={error}>
-          <Text
-            large
-            style={{
-              color: constants.colors.woltishBlue
-            }}
-          >
+          <Text large blue>
             {parentBooked ? "Cancel" : "Book"}
           </Text>
           {isLoading && (

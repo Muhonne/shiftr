@@ -28,7 +28,7 @@ const CancelButton = styled.View`
   margin: ${constants.spacing.m}px;
 `;
 
-class DateFilter extends React.Component<
+export default class DateFilter extends React.Component<
   {
     filterDate: ?Date,
     filterByDate: (date: Date) => void
@@ -52,7 +52,7 @@ class DateFilter extends React.Component<
       <Container>
         <Button onPress={this.toggle}>
           <OpenButton>
-            <Text center style={{ color: constants.colors.woltishBlue }}>
+            <Text center blue>
               {utils.dateToString(filterDate) || "All dates"}
             </Text>
           </OpenButton>
@@ -70,13 +70,7 @@ class DateFilter extends React.Component<
             />
             <Button onPress={this.toggle}>
               <CancelButton>
-                <Text
-                  style={{
-                    color: constants.colors.woltishBlue
-                  }}
-                >
-                  Cancel
-                </Text>
+                <Text blue>Cancel</Text>
               </CancelButton>
             </Button>
           </SafeAreaView>
@@ -85,5 +79,3 @@ class DateFilter extends React.Component<
     );
   }
 }
-
-export default DateFilter;

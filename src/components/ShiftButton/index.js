@@ -8,5 +8,8 @@ export default reduxAutoloader({
   loadOnInitialize: false,
   reloadOnMount: false,
   name: props => `${props.shiftId}.status`,
-  apiCall: props => apiCalls[props.label.toLowerCase()](props.shiftId)
+  apiCall: props =>
+    props.parentBooked
+      ? apiCalls.cancel(props.shiftId)
+      : apiCalls.book(props.shiftId)
 })(View);

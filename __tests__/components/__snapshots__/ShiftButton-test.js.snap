@@ -47,18 +47,17 @@ exports[`Button renders a bookable button 1`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      blue={true}
       ellipsizeMode="tail"
       large={true}
       style={
         Array [
           Object {
             "alignSelf": "flex-start",
-            "color": "#000",
+            "color": "#006bb4",
             "fontSize": 18,
           },
-          Object {
-            "color": "#006bb4",
-          },
+          undefined,
         ]
       }
     >
@@ -115,18 +114,17 @@ exports[`Button renders a button with error 1`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      blue={true}
       ellipsizeMode="tail"
       large={true}
       style={
         Array [
           Object {
             "alignSelf": "flex-start",
-            "color": "#000",
+            "color": "#006bb4",
             "fontSize": 18,
           },
-          Object {
-            "color": "#006bb4",
-          },
+          undefined,
         ]
       }
     >
@@ -201,18 +199,17 @@ exports[`Button renders a cancel button 1`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      blue={true}
       ellipsizeMode="tail"
       large={true}
       style={
         Array [
           Object {
             "alignSelf": "flex-start",
-            "color": "#000",
+            "color": "#006bb4",
             "fontSize": 18,
           },
-          Object {
-            "color": "#006bb4",
-          },
+          undefined,
         ]
       }
     >
@@ -269,18 +266,17 @@ exports[`Button renders without props 1`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      blue={true}
       ellipsizeMode="tail"
       large={true}
       style={
         Array [
           Object {
             "alignSelf": "flex-start",
-            "color": "#000",
+            "color": "#006bb4",
             "fontSize": 18,
           },
-          Object {
-            "color": "#006bb4",
-          },
+          undefined,
         ]
       }
     >

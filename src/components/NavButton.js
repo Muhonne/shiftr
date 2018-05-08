@@ -1,10 +1,11 @@
 // @flow
 
 import React from "react";
-import { Animated, Easing } from "react-native";
+import { Animated } from "react-native";
 import styled from "styled-components";
 
 import constants from "../constants";
+import animate from "../animate";
 import Button from "./Button";
 import Text from "./Text";
 
@@ -42,19 +43,10 @@ export default class NavButton extends React.Component<
   shouldComponentUpdate = (nextProps: Props) =>
     nextProps.active !== this.props.active;
 
-  animate = (toValue: number) => {
-    Animated.timing(this.state.animate, {
-      toValue,
-      duration: constants.animationDuration,
-      easing: Easing.linear,
-      useNativeDriver: true
-    }).start();
-  };
-
   interPolateValue = (start: number, end: number): any =>
     this.state.animate.interpolate({
       inputRange: [0, 1],
-      outputRange: [start, end],
+      outputRange: [start, end]
     });
 
   viewTransforms = [
@@ -66,16 +58,16 @@ export default class NavButton extends React.Component<
     const { active, onPress, label } = this.props;
 
     if (active) {
-      this.animate(1);
+      animate.toValue(this.state.animate, 1);
     } else {
-      this.animate(0);
+      animate.toValue(this.state.animate, 0);
     }
 
     return (
       <Button onPress={onPress}>
         <Content>
           <Animated.View style={{ transform: this.viewTransforms }}>
-            <Text center style={{ color: constants.colors.woltishBlue }}>
+            <Text center blue>
               {label}
             </Text>
           </Animated.View>

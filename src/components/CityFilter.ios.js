@@ -64,7 +64,7 @@ export default class CityFilter extends React.Component<
       <Container>
         <Button onPress={this.toggle}>
           <OpenButton>
-            <Text center style={{ color: constants.colors.woltishBlue }}>
+            <Text center blue>
               {filterCity || "All cities"}
             </Text>
           </OpenButton>
@@ -78,9 +78,7 @@ export default class CityFilter extends React.Component<
             {constants.cities.map(c => (
               <Button key={c} onPress={() => this.selectCity(c)}>
                 <CityButton>
-                  <Text style={{ color: constants.colors.woltishBlue }}>
-                    {c || "All cities"}
-                  </Text>
+                  <Text blue>{c || "All cities"}</Text>
                   {c === filterCity && <Selected />}
                 </CityButton>
               </Button>

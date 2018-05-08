@@ -11,7 +11,6 @@ export default {
     m: 20,
     l: 30
   },
-  animationDuration: 300,
   modalAnimation: "slide",
   colors: {
     black: "#000",

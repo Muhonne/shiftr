@@ -2,14 +2,17 @@
 
 import React from "react";
 import styled from "styled-components";
-import { Animated, Easing, TouchableWithoutFeedback } from "react-native";
+import { Animated, TouchableWithoutFeedback } from "react-native";
 
 import Text from "../Text";
 import type { Shift } from "../../constants";
 import constants from "../../constants";
 import utils from "../../utils";
 import ShiftButton from "../ShiftButton";
-import LayoutAnimation from "../../LayoutAnimation";
+import animate from "../../animate";
+
+const place = require("../../img/place.png");
+const time = require("../../img/time.png");
 
 const Container = styled(Animated.View)`
   padding: ${constants.spacing.s}px;
@@ -60,19 +63,10 @@ export default class ShiftListItem extends React.Component<
   toggle = () => {
     this.setState({ open: !this.state.open });
     if (this.state.open) {
-      this.animate(0);
+      animate.toValue(this.state.animate, 0);
     } else {
-      this.animate(1);
+      animate.toValue(this.state.animate, 1);
     }
-  };
-
-  animate = (toValue: number): void => {
-    Animated.timing(this.state.animate, {
-      toValue,
-      duration: constants.animationDuration,
-      easing: Easing.linear,
-      useNativeDriver: true
-    }).start();
   };
 
   interPolateValue = (start: number, end: number): any =>
@@ -93,18 +87,18 @@ export default class ShiftListItem extends React.Component<
     const { refresh } = this.props;
     const { open } = this.state;
 
-    LayoutAnimation();
+    animate.layout();
 
     return (
       <TouchableWithoutFeedback onPress={this.toggle}>
         <Container style={{ transform: this.viewTransforms }}>
           <Row open={this.state.open}>
             <ContentRow style={{ width: "45%" }} open={this.state.open}>
-              <Icon source={require("../../img/place.png")} />
+              <Icon source={place} />
               <Text>{area}</Text>
             </ContentRow>
             <ContentRow style={{ width: "55%" }} open={this.state.open}>
-              <Icon source={require("../../img/time.png")} />
+              <Icon source={time} />
               <Text>
                 {`${utils.formatDate(startTime)}`}
                 {open && ` -  ${utils.formatDate(endTime)}`}

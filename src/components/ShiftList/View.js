@@ -25,6 +25,7 @@ const ErrorButton = styled.View`
   padding: ${constants.spacing.l}px;
   border-width: 1;
   border-color: ${constants.colors.woltishBlue};
+  background-color: ${constants.colors.white};
 `;
 
 const Placeholder = styled.View`
@@ -46,7 +47,7 @@ export default class ShiftList extends React.Component<
   },
   {}
 > {
-  // TODO: why does eslint whine about this?
+  // eslint whines about item not being used but it is
   /* eslint-disable react/no-unused-prop-types  */
   renderShift = ({
     item
@@ -90,13 +91,17 @@ export default class ShiftList extends React.Component<
 
     return (
       <Container>
-        {/* This looks bad when refreshing,
-        would be nice if isLoading wasn't true when refreshing  */
+        {/*
+        This looks bad when refreshing,
+        would be nice if isLoading wasn't true when refreshing.
+        ErrorButton also jumps around when isLoading spinner is rendered,
+        using layoutAnimation causes the button to nicely move down but then it just stays there?
+        */
         isLoading && <ActivityIndicator size="large" />}
         {error && (
           <Button onPress={refresh}>
             <ErrorButton>
-              <Text>Getting shifts failed, tap to try again.</Text>
+              <Text blue>Getting shifts failed, tap to try again.</Text>
             </ErrorButton>
           </Button>
         )}
