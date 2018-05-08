@@ -16,6 +16,12 @@ const Container = styled.View`
   margin: ${constants.spacing.s}px;
 `;
 
+const OpenButton = styled.View`
+  padding: ${constants.spacing.s}px;
+  align-items: center;
+  justify-content: center;
+`;
+
 const CancelButton = styled.View`
   align-self: flex-end;
   padding: ${constants.spacing.m}px;
@@ -24,18 +30,18 @@ const CancelButton = styled.View`
 
 class DateFilter extends React.Component<
   {
-    filterDate: string,
-    filterByDate: (date: string) => void
+    filterDate: ?Date,
+    filterByDate: (date: Date) => void
   },
   {
     open: boolean
   }
 > {
-  state = { open: true };
+  state = { open: false };
 
   toggle = () => this.setState({ open: !this.state.open });
 
-  datePicked = (date: string) => {
+  datePicked = (date: Date) => {
     this.props.filterByDate(date);
     this.setState({ open: false });
   };
@@ -45,9 +51,11 @@ class DateFilter extends React.Component<
     return (
       <Container>
         <Button onPress={this.toggle}>
-          <Text center style={{ color: constants.colors.darkGreen }}>
-            {utils.dateToString(filterDate) || "All dates"}
-          </Text>
+          <OpenButton>
+            <Text center style={{ color: constants.colors.woltishBlue }}>
+              {utils.dateToString(filterDate) || "All dates"}
+            </Text>
+          </OpenButton>
         </Button>
         <Modal
           visible={this.state.open}
@@ -57,14 +65,14 @@ class DateFilter extends React.Component<
           <SafeAreaView>
             <DatePickerIOS
               mode={"date"}
-              date={new Date()}
+              date={filterDate || new Date()}
               onDateChange={this.datePicked}
             />
             <Button onPress={this.toggle}>
               <CancelButton>
                 <Text
                   style={{
-                    color: constants.colors.darkGreen
+                    color: constants.colors.woltishBlue
                   }}
                 >
                   Cancel

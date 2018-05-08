@@ -9,7 +9,7 @@ const Container = styled.View`
   flex: 1;
   margin: ${constants.spacing.s}px;
   border-bottom-width: 1;
-  border-bottom-color: ${constants.colors.darkGreen};
+  border-bottom-color: ${constants.colors.woltishBlue};
 `;
 
 const CityFilter = (props: {
@@ -22,7 +22,7 @@ const CityFilter = (props: {
       <Picker
         onValueChange={filterByCity}
         selectedValue={filterCity}
-        style={{ color: constants.colors.darkGreen }}
+        style={{ color: constants.colors.woltishBlue }}
       >
         {constants.cities.map(city => (
           <Picker.Item key={city} label={city || "All cities"} value={city} />

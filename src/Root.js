@@ -13,6 +13,8 @@ import DateFilter from "./components/DateFilter";
 /* eslint-enable import/no-unresolved,import/extensions */
 import ShiftList from "./components/ShiftList";
 import NavButton from "./components/NavButton";
+import Button from "./components/Button";
+import Text from "./components/Text";
 import constants from "./constants";
 import type { CityTypes } from "./constants";
 import store from "./redux/store";
@@ -34,9 +36,15 @@ const TopContainer = styled(Container)`
   border-bottom-width: 1;
 `;
 
+const ResetButton = styled.View`
+  align-items: center;
+  justify-content: center;
+  padding: ${constants.spacing.s}px;
+`;
+
 export default class Root extends React.Component<
   {},
-  { filterBooked: boolean, filterCity: CityTypes, filterDate: string }
+  { filterBooked: boolean, filterCity: CityTypes, filterDate: string | Date }
 > {
   state = {
     filterBooked: false,
@@ -45,36 +53,49 @@ export default class Root extends React.Component<
   };
 
   filterByCity = (filterCity: CityTypes) => this.setState({ filterCity });
-  filterByDate = (filterDate: string) => this.setState({ filterDate });
+  filterByDate = (filterDate: Date) => this.setState({ filterDate });
+
+  resetTopFilters = () => this.setState({ filterCity: "", filterDate: "" });
 
   render() {
+    const { filterCity, filterDate, filterBooked } = this.state;
+
     return (
       <Provider store={store}>
         <SafeAreaView style={{ flex: 1 }}>
           <TopContainer>
             <CityFilter
-              filterCity={this.state.filterCity}
+              filterCity={filterCity}
               filterByCity={this.filterByCity}
             />
             <DateFilter
-              filterDate={this.state.filterDate}
+              filterDate={filterDate}
               filterByDate={this.filterByDate}
             />
+            {(Boolean(filterDate) || Boolean(filterCity)) && (
+              <Button onPress={this.resetTopFilters}>
+                <ResetButton>
+                  <Text style={{ color: constants.colors.woltishBlue }}>
+                    Clear
+                  </Text>
+                </ResetButton>
+              </Button>
+            )}
           </TopContainer>
           <ShiftList
-            filterBooked={this.state.filterBooked}
-            filterCity={this.state.filterCity}
-            filterDate={this.state.filterDate}
+            filterBooked={filterBooked}
+            filterCity={filterCity}
+            filterDate={filterDate}
           />
           <BottomContainer>
             <NavButton
               label={"My shifts"}
-              active={this.state.filterBooked}
+              active={filterBooked}
               onPress={() => this.setState({ filterBooked: true })}
             />
             <NavButton
               label={"Available"}
-              active={!this.state.filterBooked}
+              active={!filterBooked}
               onPress={() => this.setState({ filterBooked: false })}
             />
           </BottomContainer>

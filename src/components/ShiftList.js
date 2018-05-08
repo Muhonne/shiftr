@@ -1,7 +1,7 @@
 // @flow
 
 import React from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native";
 import { reduxAutoloader } from "redux-autoloader";
 import styled from "styled-components";
 
@@ -9,6 +9,7 @@ import apiCalls from "../apiCalls";
 
 import ShiftListItem from "./ShiftListItem";
 import Button from "./Button";
+import ActivityIndicator from "./ActivityIndicator";
 import Text from "./Text";
 import constants from "../constants";
 import type { Shift, ShiftArray, CityTypes } from "../constants";
@@ -26,8 +27,7 @@ const ErrorButton = styled.View`
   margin: ${constants.spacing.l}px;
   padding: ${constants.spacing.l}px;
   border-width: 1;
-  border-color: ${constants.colors.darkGreen};
-  border-radius: ${constants.spacing.s};
+  border-color: ${constants.colors.woltishBlue};
 `;
 
 const Placeholder = styled.View`
@@ -36,20 +36,13 @@ const Placeholder = styled.View`
   margin: ${constants.spacing.l}px;
 `;
 
-const Loading = styled.View`
-  position: absolute;
-  top: ${constants.spacing.l};
-  left: ${constants.spacing.l};
-  right: ${constants.spacing.l};
-`;
-
 class ShiftList extends React.Component<
   {
     data: ShiftArray,
-    isLoading: boolean,
     error: boolean,
     refresh: () => void,
     isRefreshing: boolean,
+    isLoading: boolean,
     filterBooked: boolean,
     filterCity: CityTypes,
     filterDate: string
@@ -60,7 +53,11 @@ class ShiftList extends React.Component<
     if (item.placeholder) {
       return (
         <Placeholder>
-          <Text>No booked shifts. Drag down to refresh.</Text>
+          <Text>
+            {this.props.filterBooked
+              ? "No booked shifts. Drag down to refresh."
+              : "No shifts. Drag down to refresh."}
+          </Text>
         </Placeholder>
       );
     }
@@ -70,10 +67,10 @@ class ShiftList extends React.Component<
   render() {
     const {
       data,
-      isLoading,
       error,
       refresh,
       isRefreshing,
+      isLoading,
       filterBooked,
       filterCity,
       filterDate
@@ -81,21 +78,17 @@ class ShiftList extends React.Component<
     let items = [];
     if (data) {
       items = data
+        // TODO: too many loops
         .filter((s: Shift): boolean => s.booked === filterBooked)
-        .filter(s => !filterCity || s.area === filterCity);
-      //.filter(s => !filterDate || utils.dateMatch(s, filterDate));
+        .filter(s => !filterCity || s.area === filterCity)
+        .filter(s => !filterDate || utils.filterWithDate(s, filterDate));
     }
 
     return (
       <Container>
-        {isLoading && (
-          <Loading>
-            <ActivityIndicator
-              size="large"
-              color={constants.colors.darkGreen}
-            />
-          </Loading>
-        )}
+        {/* This looks bad when refreshing,
+        would be nice if isLoading wasn't true when refreshing  */
+        isLoading && <ActivityIndicator size="large" />}
         {error && (
           <Button onPress={refresh}>
             <ErrorButton>

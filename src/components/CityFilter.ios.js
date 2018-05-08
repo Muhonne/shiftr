@@ -14,6 +14,12 @@ const Container = styled.View`
   margin: ${constants.spacing.s}px;
 `;
 
+const OpenButton = styled.View`
+  padding: ${constants.spacing.s}px;
+  align-items: center;
+  justify-content: center;
+`;
+
 const CityButton = styled.View`
   padding: ${constants.spacing.s}px;
   border-bottom-width: 1;
@@ -26,7 +32,7 @@ const Selected = styled.View`
   width: ${constants.spacing.s};
   height: ${constants.spacing.s};
   border-radius: ${constants.spacing.s};
-  background-color: ${constants.colors.darkGreen};
+  background-color: ${constants.colors.woltishBlue};
   position: absolute;
   right: ${constants.spacing.s};
 `;
@@ -57,9 +63,11 @@ export default class CityFilter extends React.Component<
     return (
       <Container>
         <Button onPress={this.toggle}>
-          <Text center style={{ color: constants.colors.darkGreen }}>
-            {filterCity || "All cities"}
-          </Text>
+          <OpenButton>
+            <Text center style={{ color: constants.colors.woltishBlue }}>
+              {filterCity || "All cities"}
+            </Text>
+          </OpenButton>
         </Button>
         <Modal
           visible={open}
@@ -70,7 +78,7 @@ export default class CityFilter extends React.Component<
             {constants.cities.map(c => (
               <Button key={c} onPress={() => this.selectCity(c)}>
                 <CityButton>
-                  <Text style={{ color: constants.colors.darkGreen }}>
+                  <Text style={{ color: constants.colors.woltishBlue }}>
                     {c || "All cities"}
                   </Text>
                   {c === filterCity && <Selected />}

@@ -18,7 +18,7 @@ const Content = styled.View`
 
 const Indicator = styled(Animated.View)`
   margin-top: ${constants.spacing.s};
-  background-color: ${constants.colors.darkGreen};
+  background-color: ${constants.colors.woltishBlue};
   height: 2;
   width: 80%;
 `;
@@ -75,7 +75,7 @@ export default class NavButton extends React.Component<
       <Button onPress={onPress}>
         <Content>
           <Animated.View style={{ transform: this.viewTransforms }}>
-            <Text center style={{ color: constants.colors.darkGreen }}>
+            <Text center style={{ color: constants.colors.woltishBlue }}>
               {label}
             </Text>
           </Animated.View>

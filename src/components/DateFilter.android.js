@@ -13,7 +13,7 @@ const Container = styled.View`
   flex: 1;
   margin: ${constants.spacing.s}px;
   border-bottom-width: 1;
-  border-bottom-color: ${constants.colors.darkGreen};
+  border-bottom-color: ${constants.colors.woltishBlue};
   align-items: center;
   justify-content: center;
 `;
@@ -24,7 +24,7 @@ const DateFilter = (props: { filterDate: string, filterByDate: string }) => {
   const getDate = async () => {
     try {
       const { action, year, month, day } = await DatePickerAndroid.open({
-        date: new Date()
+        date: filterDate || new Date()
       });
       if (action !== DatePickerAndroid.dismissedAction) {
         // Selected year, month (0-11), day
@@ -32,19 +32,19 @@ const DateFilter = (props: { filterDate: string, filterByDate: string }) => {
         filterByDate(date);
       }
     } catch ({ code, message }) {
-      // when would this fail?
+      // when/how would this fail?
       console.warn("Cannot open date picker", code, message);
     }
   };
 
   return (
-    <Container>
-      <Button onPress={getDate}>
-        <Text center style={{ color: constants.colors.darkGreen }}>
+    <Button onPress={getDate}>
+      <Container>
+        <Text center style={{ color: constants.colors.woltishBlue }}>
           {utils.dateToString(filterDate) || "All dates"}
         </Text>
-      </Button>
-    </Container>
+      </Container>
+    </Button>
   );
 };
 

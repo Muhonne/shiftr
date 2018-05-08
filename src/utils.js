@@ -6,7 +6,7 @@ import type { Shift, ShiftArray } from "./constants";
 export default {
   formatDate: (millis: number | string): string =>
     moment(millis).format("DD.MM.YYYY H:mm"),
-  dateToString: (date: string) => {
+  dateToString: (date: ?Date) => {
     if (!date) return date;
     return moment(date).format("DD.MM.YYYY");
   },
@@ -17,5 +17,17 @@ export default {
   filterPastShifts: (shifts: ShiftArray) => {
     const now = new Date().getTime();
     return shifts.filter((s: Shift) => now < parseInt(s.startTime, 10));
+  },
+  filterWithDate: (
+    shift: Shift,
+    date: any
+  ) => {
+    // match the day
+    const shiftDate = new Date(shift.startTime);
+    return (
+      shiftDate.getDate() === date.getDate() &&
+      shiftDate.getMonth() === date.getMonth() &&
+      shiftDate.getFullYear() === date.getFullYear()
+    );
   }
 };

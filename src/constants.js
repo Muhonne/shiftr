@@ -16,11 +16,10 @@ export default {
   colors: {
     black: "#000",
     white: "#fff",
-    darkGreen: "#3f6066",
-    lightGreen: "#429dab",
-    greenBg: "#b6d2d1",
-    grey: "#9ca09f",
-    red: "#ef727a"
+    woltishBlue: "#006bb4",
+    lightBlue: "#ccebff",
+    grey: "#cacaca",
+    error: "#cc0000"
   },
   cities: [
     "",

@@ -12,12 +12,12 @@ import { reduxAutoloader } from "redux-autoloader";
 
 import apiCalls from "../apiCalls";
 import Text from "./Text";
-import type { Shift } from "../types";
+import type { Shift } from "../constants";
 import constants from "../constants";
 import utils from "../utils";
 import ShiftButton from "./ShiftButton";
 
-const Container = styled.View`
+const Container = styled(Animated.View)`
   padding: ${constants.spacing.s}px;
   margin-top: ${constants.spacing.s / 2}px;
   margin-bottom: ${constants.spacing.s / 2}px;
@@ -25,7 +25,7 @@ const Container = styled.View`
   margin-right: ${constants.spacing.s}px;
   border: 1px;
   border-color: ${constants.colors.grey};
-  border-radius: ${constants.spacing.s};
+  background-color: ${constants.colors.white};
 `;
 
 const Row = styled.View`
@@ -64,7 +64,6 @@ class ShiftListItem extends React.Component<
   };
 
   toggle = () => {
-    LayoutAnimation.easeInEaseOut();
     this.setState({ open: !this.state.open });
     if (this.state.open) {
       this.animate(0);
@@ -89,10 +88,8 @@ class ShiftListItem extends React.Component<
     });
 
   viewTransforms = [
-    { scaleX: this.interPolateValue(1, 1.1) },
-    { scaleY: this.interPolateValue(1, 1.1) },
-    // translateX is pretty much random that works
-    { translateX: this.interPolateValue(0, 10) }
+    { scaleX: this.interPolateValue(1, 1.05) },
+    { scaleY: this.interPolateValue(1, 1.05) }
   ];
 
   render() {
@@ -106,27 +103,19 @@ class ShiftListItem extends React.Component<
 
     return (
       <TouchableWithoutFeedback onPress={this.toggle}>
-        <Container>
+        <Container style={{ transform: this.viewTransforms }}>
           <Row open={this.state.open}>
-            <Animated.View
-              style={{ width: "45%", transform: this.viewTransforms }}
-            >
-              <ContentRow open={this.state.open}>
-                <Icon source={require("../img/place.png")} />
-                <Text>{area}</Text>
-              </ContentRow>
-            </Animated.View>
-            <Animated.View
-              style={{ width: "55%", transform: this.viewTransforms }}
-            >
-              <ContentRow open={this.state.open}>
-                <Icon source={require("../img/time.png")} />
-                <Text>
-                  {`${utils.formatDate(startTime)}`}
-                  {open && ` -  ${utils.formatDate(endTime)}`}
-                </Text>
-              </ContentRow>
-            </Animated.View>
+            <ContentRow style={{ width: "45%" }} open={this.state.open}>
+              <Icon source={require("../img/place.png")} />
+              <Text>{area}</Text>
+            </ContentRow>
+            <ContentRow style={{ width: "55%" }} open={this.state.open}>
+              <Icon source={require("../img/time.png")} />
+              <Text>
+                {`${utils.formatDate(startTime)}`}
+                {open && ` -  ${utils.formatDate(endTime)}`}
+              </Text>
+            </ContentRow>
           </Row>
           {open && (
             <Row>
@@ -135,12 +124,7 @@ class ShiftListItem extends React.Component<
                 <Text large>{utils.getDuration(startTime, endTime)}</Text>
               </OpenContent>
               <OpenContent>
-                {/*
-                 ShiftButton has a funky key because we want to trigger the animation for
-                 the whole view, not just the label text because animating text sucks
-                 */}
                 <ShiftButton
-                  key={`${id}${booked.toString()}`}
                   shiftId={id}
                   refreshParent={refresh}
                   parentBooked={booked}
