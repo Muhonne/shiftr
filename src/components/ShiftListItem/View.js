@@ -2,20 +2,14 @@
 
 import React from "react";
 import styled from "styled-components";
-import {
-  Animated,
-  Easing,
-  LayoutAnimation,
-  TouchableWithoutFeedback
-} from "react-native";
-import { reduxAutoloader } from "redux-autoloader";
+import { Animated, Easing, TouchableWithoutFeedback } from "react-native";
 
-import apiCalls from "../apiCalls";
-import Text from "./Text";
-import type { Shift } from "../constants";
-import constants from "../constants";
-import utils from "../utils";
-import ShiftButton from "./ShiftButton";
+import Text from "../Text";
+import type { Shift } from "../../constants";
+import constants from "../../constants";
+import utils from "../../utils";
+import ShiftButton from "../ShiftButton";
+import LayoutAnimation from "../../LayoutAnimation";
 
 const Container = styled(Animated.View)`
   padding: ${constants.spacing.s}px;
@@ -54,7 +48,7 @@ type Props = {
   refresh: () => void
 };
 
-class ShiftListItem extends React.Component<
+export default class ShiftListItem extends React.Component<
   Props,
   { open: boolean, animate: any }
 > {
@@ -99,18 +93,18 @@ class ShiftListItem extends React.Component<
     const { refresh } = this.props;
     const { open } = this.state;
 
-    LayoutAnimation.easeInEaseOut();
+    LayoutAnimation();
 
     return (
       <TouchableWithoutFeedback onPress={this.toggle}>
         <Container style={{ transform: this.viewTransforms }}>
           <Row open={this.state.open}>
             <ContentRow style={{ width: "45%" }} open={this.state.open}>
-              <Icon source={require("../img/place.png")} />
+              <Icon source={require("../../img/place.png")} />
               <Text>{area}</Text>
             </ContentRow>
             <ContentRow style={{ width: "55%" }} open={this.state.open}>
-              <Icon source={require("../img/time.png")} />
+              <Icon source={require("../../img/time.png")} />
               <Text>
                 {`${utils.formatDate(startTime)}`}
                 {open && ` -  ${utils.formatDate(endTime)}`}
@@ -128,7 +122,6 @@ class ShiftListItem extends React.Component<
                   shiftId={id}
                   refreshParent={refresh}
                   parentBooked={booked}
-                  label={booked ? "Cancel" : "Book"}
                 />
               </OpenContent>
             </Row>
@@ -138,8 +131,3 @@ class ShiftListItem extends React.Component<
     );
   }
 }
-export default reduxAutoloader({
-  startOnMount: false,
-  name: (props: Props) => props.shift.id,
-  apiCall: (props: Props) => apiCalls.getShift(props.shift.id)
-})(ShiftListItem);

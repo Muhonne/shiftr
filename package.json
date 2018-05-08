@@ -37,6 +37,11 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": ["./__mocks__/setupMocks.js"],
+    "moduleNameMapper": {
+      "styled-components":
+        "<rootDir>/node_modules/styled-components/dist/styled-components.native.cjs.js"
+    }
   }
 }

@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders a bookable button 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      undefined,
+    ]
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    error={undefined}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderColor": "#006bb4",
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+          "opacity": 1,
+          "paddingBottom": 10,
+          "paddingLeft": 10,
+          "paddingRight": 10,
+          "paddingTop": 10,
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      large={true}
+      style={
+        Array [
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#000",
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#006bb4",
+          },
+        ]
+      }
+    >
+      Book
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Button renders a button with error 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      undefined,
+    ]
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    error="test error message"
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderColor": "#006bb4",
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+          "opacity": 0.5,
+          "paddingBottom": 10,
+          "paddingLeft": 10,
+          "paddingRight": 10,
+          "paddingTop": 10,
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      large={true}
+      style={
+        Array [
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#000",
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#006bb4",
+          },
+        ]
+      }
+    >
+      Cancel
+    </Text>
+  </View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    center={true}
+    ellipsizeMode="tail"
+    style={
+      Array [
+        Object {
+          "alignSelf": "center",
+          "color": "#000",
+          "fontSize": 16,
+        },
+        undefined,
+      ]
+    }
+  >
+    test error message
+  </Text>
+</View>
+`;
+
+exports[`Button renders a cancel button 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      undefined,
+    ]
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    error={undefined}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderColor": "#006bb4",
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+          "opacity": 1,
+          "paddingBottom": 10,
+          "paddingLeft": 10,
+          "paddingRight": 10,
+          "paddingTop": 10,
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      large={true}
+      style={
+        Array [
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#000",
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#006bb4",
+          },
+        ]
+      }
+    >
+      Cancel
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Button renders without props 1`] = `
+<View
+  style={
+    Array [
+      Object {},
+      undefined,
+    ]
+  }
+>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    error={undefined}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderColor": "#006bb4",
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+          "opacity": 1,
+          "paddingBottom": 10,
+          "paddingLeft": 10,
+          "paddingRight": 10,
+          "paddingTop": 10,
+        },
+        undefined,
+      ]
+    }
+    testID={undefined}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      large={true}
+      style={
+        Array [
+          Object {
+            "alignSelf": "flex-start",
+            "color": "#000",
+            "fontSize": 18,
+          },
+          Object {
+            "color": "#006bb4",
+          },
+        ]
+      }
+    >
+      Book
+    </Text>
+  </View>
+</View>
+`;

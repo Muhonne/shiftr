@@ -2,18 +2,15 @@
 
 import React from "react";
 import { FlatList } from "react-native";
-import { reduxAutoloader } from "redux-autoloader";
 import styled from "styled-components";
 
-import apiCalls from "../apiCalls";
-
-import ShiftListItem from "./ShiftListItem";
-import Button from "./Button";
-import ActivityIndicator from "./ActivityIndicator";
-import Text from "./Text";
-import constants from "../constants";
-import type { Shift, ShiftArray, CityTypes } from "../constants";
-import utils from "../utils";
+import ShiftListItem from "../ShiftListItem";
+import Button from "../Button";
+import ActivityIndicator from "../ActivityIndicator";
+import Text from "../Text";
+import constants from "../../constants";
+import type { Shift, ShiftArray, CityTypes } from "../../constants";
+import utils from "../../utils";
 
 const Container = styled.View`
   flex: 1;
@@ -36,7 +33,7 @@ const Placeholder = styled.View`
   margin: ${constants.spacing.l}px;
 `;
 
-class ShiftList extends React.Component<
+export default class ShiftList extends React.Component<
   {
     data: ShiftArray,
     error: boolean,
@@ -49,7 +46,14 @@ class ShiftList extends React.Component<
   },
   {}
 > {
-  renderShift = ({ item }) => {
+  // TODO: why does eslint whine about this?
+  /* eslint-disable react/no-unused-prop-types  */
+  renderShift = ({
+    item
+  }: {
+    item: Shift | { placeholder: boolean, id: string }
+  }) => {
+    /* eslint-enable react/no-unused-prop-types  */
     if (item.placeholder) {
       return (
         <Placeholder>
@@ -114,14 +118,3 @@ class ShiftList extends React.Component<
     );
   }
 }
-
-export default reduxAutoloader(
-  {
-    name: "shifts", // A unique name for the loader
-    apiCall: apiCalls.getShifts
-  },
-  state => ({
-    ...state,
-    data: state.data ? utils.filterPastShifts(state.data) : undefined
-  })
-)(ShiftList);

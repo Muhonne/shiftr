@@ -1,15 +1,12 @@
 // @flow
 
 import React from "react";
-import { LayoutAnimation } from "react-native";
 import styled from "styled-components";
-import { reduxAutoloader } from "redux-autoloader";
-
-import apiCalls from "../apiCalls";
-import Button from "./Button";
-import ActivityIndicator from "./ActivityIndicator";
-import Text from "./Text";
-import constants from "../constants";
+import Button from "../Button";
+import LayoutAnimation from "../../LayoutAnimation";
+import ActivityIndicator from "../ActivityIndicator";
+import Text from "../Text";
+import constants from "../../constants";
 
 const View = styled.View``;
 
@@ -25,26 +22,26 @@ const ButtonContent = styled.View`
 `;
 
 type Props = {
-  shiftId: string, // eslint-disable-line react/no-unused-prop-types,:type used in connect
   isLoading: boolean,
   data: any,
   refresh: () => void,
   refreshParent: () => void,
   parentBooked: boolean,
-  label: string
 };
 
 const ShiftButton = (props: Props) => {
-  LayoutAnimation.easeInEaseOut();
+  LayoutAnimation();
   const {
     refresh,
     data,
     isLoading,
     refreshParent,
     parentBooked,
-    label
   } = props;
   if (data && !data.statusCode && data.booked !== parentBooked) {
+    // if it's stupid but it works it's not stupid
+    // regardless this is a bit shit and there is no refreshing/loading indicator on the parent so
+    // if it takes a while to update the text won't change and it looks like nothing is happening
     refreshParent();
   }
   const error = data && data.message;
@@ -58,7 +55,7 @@ const ShiftButton = (props: Props) => {
               color: constants.colors.woltishBlue
             }}
           >
-            {label}
+            {parentBooked ? "Cancel" : "Book"}
           </Text>
           {isLoading && (
             <ActivityIndicator style={{ marginLeft: 5 }} size="small" />
@@ -70,10 +67,4 @@ const ShiftButton = (props: Props) => {
   );
 };
 
-export default reduxAutoloader({
-  startOnMount: false,
-  loadOnInitialize: false,
-  reloadOnMount: false,
-  name: (props: Props) => `${props.shiftId}.status`,
-  apiCall: (props: Props) => apiCalls[props.label.toLowerCase()](props.shiftId)
-})(ShiftButton);
+export default ShiftButton;
