@@ -83,10 +83,12 @@ export default class ShiftList extends React.Component<
     let items = [];
     if (data) {
       items = data
-        // TODO: too many loops
-        .filter((s: Shift): boolean => s.booked === filterBooked)
-        .filter(s => !filterCity || s.area === filterCity)
-        .filter(s => !filterDate || utils.filterWithDate(s, filterDate));
+        .filter(
+          s =>
+            s.booked === filterBooked &&
+            (!filterCity || s.area === filterCity) &&
+            (!filterDate || utils.filterWithDate(s, filterDate))
+        );
     }
 
     return (
