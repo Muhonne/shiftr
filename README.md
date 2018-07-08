@@ -1,5 +1,5 @@
 # shiftr [![Build Status](https://travis-ci.org/Muhonne/shiftr.svg?branch=master)](https://travis-ci.org/Muhonne/shiftr)
-
+Skrölölm.
 An answer to Wolts react-native assignment: https://github.com/woltapp/react-native-assignment
 
 ## Implementation
